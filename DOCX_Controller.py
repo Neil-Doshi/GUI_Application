@@ -2,7 +2,7 @@ from docx import Document
 import fitz
 import os
 import re
-
+import comtypes.client
 
 
 fl = []
@@ -30,6 +30,13 @@ while len(k) > 1:
     s[fl[k[x]]] = st
     k = k[1:]
 
+wdFormatPDF = 17
+path = "D://Scripts//Demo//"
 for j in s.keys():
-    print(j,s[j])
+    # print(j,s[j])
+    document = Document()
+    document.add_paragraph(j + "    " + s[j])
+    n = str(j) + ".docx"
+    document.save(path + n)
+  
 
