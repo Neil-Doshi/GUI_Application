@@ -1,3 +1,10 @@
+'''
+The Purpose of this Code is to extract the content from a pdf file which consists of table of content for a project
+Since the extracted text is not proper format i.e. same as table of content we use the code below to reformat it
+For now this file only reads table of cable and generated word file for each entry in table of content.
+'''
+
+
 import os
 import re
 import fitz
