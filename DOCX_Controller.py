@@ -1,44 +1,10 @@
-from docx import Document
-import fitz
 import os
 import re
+import fitz
 import comtypes.client
+from docx import Document
 
 
-# fl = []
-# doc = fitz.open("toc.pdf")  # document
-# for page in doc:
-#     words = page.get_text("words", sort=True)
-#     fl += [word[4] for word in words]
-# # print(fl)
-
-# # k = [fl[i] for i in range(len(fl)) if re.search("^[1-9][.][0-9]*[0-9]$",fl[i])]
-# k = [i for i in range(len(fl)) if re.search("^[1-9][.][0-9]*[0-9]$",fl[i])]
-# k.append(len(fl) - 1)
-# # print(k)
-
-# s = {}
-# x = 0
-# y = 1
-# while len(k) > 1:
-#     st = ""
-#     for i in range(k[x]+1,k[y]):
-#         if fl[i] == "|":
-#             st = st[:-2]
-#             break
-#         st += fl[i] + " "
-#     s[fl[k[x]]] = st
-#     k = k[1:]
-
-
-# path = "D://Scripts//Demo//"
-# for j in s.keys():
-#     # print(j,s[j])
-#     document = Document()
-#     document.add_paragraph(j + "    " + s[j])
-#     n = str(j) + ".docx"
-#     document.save(path + n)
-  
 class Submittal():
     def __init__(self,file,path):
         self.document = file # table of content pdf file
@@ -58,7 +24,7 @@ class Submittal():
         self.index_extractor()
             
     def index_extractor(self):
-        self.indexs = [i for i in range(len(fl)) if re.search("^[1-9][.][0-9]*[0-9]$",fl[i])] # iterating through all words and looking for number that resembles format 6.1..
+        self.indexs = [i for i in range(len(self.extracted_text_from_PDF)) if re.search("^[1-9][.][0-9]*[0-9]$",self.extracted_text_from_PDF[i])] # iterating through all words and looking for number that resembles format 6.1..
         self.indexs.append(len(self.extracted_text_from_PDF) - 1) # saving the value to handle last index of each page
         print("Extracted index")
         self.create_relation()
@@ -78,9 +44,9 @@ class Submittal():
         self.create_doc()
     
     def create_doc(self):
-        for j in s.keys(): #iterate through keys to combine and write to word file
+        for j in self.relation.keys(): #iterate through keys to combine and write to word file
             document = Document() # initializes a blank document in memory
-            document.add_paragraph(j + "    " + s[j]) # writes the key and value pair
+            document.add_paragraph(j + "    " + self.relation[j]) # writes the key and value pair
             n = str(j) + ".docx" # Makes the files based on key
             document.save(self.save_path + n) # actually generates and save the files
         print("Generated word files")
