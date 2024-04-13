@@ -10,7 +10,7 @@ import re
 import fitz
 import comtypes.client
 from docx import Document
-
+from docx2pdf import convert
 
 class Submittal():
     def __init__(self,file,path):
@@ -57,6 +57,11 @@ class Submittal():
             n = str(j) + ".docx" # Makes the files based on key
             document.save(self.save_path + n) # actually generates and save the files
         print("Generated word files")
+        return
+    
+    def create_pdf(self):
+        for i in os.listdir(self.save_path):
+            convert(i)
         return
     
 if __name__ == '__main__':
