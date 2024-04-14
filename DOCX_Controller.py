@@ -57,7 +57,7 @@ class Submittal():
             n = str(j) + ".docx" # Makes the files based on key
             document.save(self.save_path + n) # actually generates and save the files
         print("Generated word files")
-        return
+        self.create_pdf()
     
     def create_pdf(self):
         for i in os.listdir(self.save_path):
