@@ -13,7 +13,8 @@ from docx2pdf import convert
 
 class Submittal():
     def __init__(self, file, path, path_doc):
-        self.document = file  # table of content pdf file
+        self.document = fitz.open(file)  # table of content pdf file
+        print(self.document)
         self.save_path = path
         self.path_doc = path_doc
         self.extracted_text_from_PDF = []  # variable holds the values read from pdf
@@ -23,7 +24,7 @@ class Submittal():
         # Example : "4.9 Machine learning" is the entry in Table of content the list will hold 4.9
         self.relation = {}
         print("Code Initialized")
-        self.pdf_text_extractor()
+        # self.pdf_text_extractor()
 
     def pdf_text_extractor(self):
         for page in self.document:
@@ -33,7 +34,6 @@ class Submittal():
         self.edge_case += [i for i in range(len(self.words) - 1) if self.words[i][-3:] > self.words[i + 1][-3:]]
         if len(self.document) > len(self.edge_case):
             self.edge_case.append(len(self.words) - 1)
-        print(self.extracted_text_from_PDF[48])
         print("Extracted text")
         self.index_extractor()
 
@@ -52,12 +52,10 @@ class Submittal():
                     helper_string += self.extracted_text_from_PDF[i]  # we end up adding 2 extra elements so we remove it
                     break
                 helper_string += self.extracted_text_from_PDF[i] + " "  # adding all values to get the real string
-            # print(helper_string)
             self.relation[self.extracted_text_from_PDF[self.indexs[helper_var1]]] = helper_string  # adding relation
             self.indexs = self.indexs[1:]  # removing first element for next iteration
         print("Generated Relations")
-        print(self.relation)
-        # self.create_doc()
+        self.create_doc()
 
     def create_doc(self):
         for j in self.relation.keys():  #iterate through keys to combine and write to word file
