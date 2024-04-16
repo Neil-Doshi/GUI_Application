@@ -6,6 +6,7 @@ For now this file only reads table of cable and generated word file for each ent
 
 
 import re
+import sys
 import fitz
 from docx import Document
 from docx2pdf import convert
@@ -24,7 +25,7 @@ class Submittal():
         # Example : "4.9 Machine learning" is the entry in Table of content the list will hold 4.9
         self.relation = {}
         print("Code Initialized")
-        # self.pdf_text_extractor()
+        self.pdf_text_extractor()
 
     def pdf_text_extractor(self):
         for page in self.document:
@@ -67,6 +68,7 @@ class Submittal():
         self.create_pdf()
 
     def create_pdf(self):
+        sys.stderr = open("consoleoutput.log", "w")
         convert(self.path_doc, self.save_path)
         return
 
@@ -74,5 +76,5 @@ class Submittal():
 if __name__ == '__main__':
     path = "C://Users//Neil//Downloads//GUI_Application//Result//"
     path_doc = "C://Users//Neil//Downloads//GUI_Application//Result//Doc//"
-    file = fitz.open("C://Users//Neil//Downloads//GUI_Application/Test_case//0.0.0.pdf")
+    file = "C://Users//Neil//Downloads//GUI_Application/Test_case//0.0.0.pdf"
     obj = Submittal(file, path, path_doc)
