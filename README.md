@@ -11,3 +11,4 @@ path to table of content pdf file (exampe: c:\\\Users\\\name of youe system\\\Do
 path to save the word title pages (exampe: c:\\\Users\\\name of youe system\\\Downloads\\\some folder name\\\\)  
 path to save the pdf title pages (exampe: c:\\\Users\\\name of youe system\\\Downloads\\\some folder name\\\\)  
 Note: please make sure to use 2 forward slash as shown in example (back slash doesnt work for now). Only for path to file the path should end with filenae.pdf. for other 2 it should end with \\\\.
+
