@@ -60,22 +60,25 @@ from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow, QTextEdit
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setMouseTracking(True)
+        # self.setMouseTracking(True)
         self.label = QLabel("click")
         
         self.setCentralWidget(self.label)
 
     def mouseMoveEvent(self, e):
-        
+        print(f'{e} mousemoveevent')
         self.label.setText("mouseMoveEvent")
 
     def mousePressEvent(self, e):
+        print(f'{e} mousepressevent')
         self.label.setText("mousePressEvent")
 
     def mouseReleaseEvent(self, e):
+        print(f'{e} mouseReleaseEvent')
         self.label.setText("mouseReleaseEvent")
 
     def mouseDoubleClickEvent(self, e):
+        print(f'{e} mouseDoubleClickEvent')
         self.label.setText("mouseDoubleClickEvent")
 
 
