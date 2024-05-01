@@ -6,9 +6,12 @@ For now this file only reads table of cable and generated word file for each ent
 
 
 import re
+import sys
 import fitz
 from docx import Document
 from docx2pdf import convert
+from docx.shared import Pt, Inches, Cm
+from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
 
 
 class Submittal():
@@ -24,7 +27,7 @@ class Submittal():
         # Example : "4.9 Machine learning" is the entry in Table of content the list will hold 4.9
         self.relation = {}
         print("Code Initialized")
-        # self.pdf_text_extractor()
+        self.pdf_text_extractor()
 
     def pdf_text_extractor(self):
         for page in self.document:
@@ -58,15 +61,41 @@ class Submittal():
         self.create_doc()
 
     def create_doc(self):
+        dummy = "0"
         for j in self.relation.keys():  #iterate through keys to combine and write to word file
-            document = Document()  # initializes a blank document in memory
-            document.add_paragraph(j + "    " + self.relation[j])  # writes the key and value pair
+            document = Document("C:\\Users\\Neil\\Downloads\\GUI_Application\\1.0.docx")  # initializes a blank document in memory
+            if document.paragraphs[0]._element != None:  #lines 67 to 70 remove first paragraph
+                p = document.paragraphs[0]._element
+                p.getparent().remove(p)
+                p._p = p._element = None
+            if int(j[0]) > int(dummy):  #handles [1-9].0 case and makes a small table of content
+                dummy = j[0]
+                helper = self.case_handler(j[0])
+                count = 0
+                for k in helper.keys():
+                    if count == 0:
+                        para = document.add_paragraph(k + "    " + self.relation[k])
+                        count += 1
+                    else:
+                        para = document.add_paragraph("\t" + k + "    " + self.relation[k])
+            else:
+                para = document.add_paragraph(j + "    " + self.relation[j])  # writes the key and value pair
+            para.style.font.name = "Arial"
+            para.style.font.size = Pt(20)
+            para.style.paragraph_format.space_before = Pt(0.25)
+            para.style.paragraph_format.space_after = Pt(0.25)
             n = str(j) + ".docx"  # Makes the files based on key
             document.save(self.path_doc + n)  # actually generates and save the files
         print("Generated word files")
-        self.create_pdf()
+        # self.create_pdf()
+        
+    def case_handler(self,pointer):
+        res = {key: val for key, val in self.relation.items() if key.startswith(pointer)}
+        return res
+        
 
     def create_pdf(self):
+        sys.stderr = open("consoleoutput.log", "w")
         convert(self.path_doc, self.save_path)
         return
 
@@ -74,5 +103,5 @@ class Submittal():
 if __name__ == '__main__':
     path = "C://Users//Neil//Downloads//GUI_Application//Result//"
     path_doc = "C://Users//Neil//Downloads//GUI_Application//Result//Doc//"
-    file = fitz.open("C://Users//Neil//Downloads//GUI_Application/Test_case//0.0.0.pdf")
+    file = "C://Users//Neil//Downloads//GUI_Application/Test_case//0.0.0.pdf"
     obj = Submittal(file, path, path_doc)
