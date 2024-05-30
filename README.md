@@ -5,7 +5,8 @@ This Project is currently under demo release:
   
 Current Functionality:  
 create pdf and word title pages using table of content(pdf file)  
-![image](https://github.com/Neil-Doshi/GUI_Application/assets/43719571/de2f4cd5-43bb-451e-981b-07ca3e73d43a)  
+
+![image](https://github.com/Neil-Doshi/GUI_Application/assets/43719571/bc9c2875-6daa-4a30-9b20-8af221c4097e)
 
 Required Inputs:   
 path to table of content pdf file (exampe: c:\\\Users\\\name of youe system\\\Downloads\\\some folder name\\\table_of_content.pdf)  
